@@ -1,0 +1,67 @@
+{
+  "name": "enterprise-copilot-prompts",
+  "displayName": "Enterprise Copilot Prompts",
+  "description": "Distributes enterprise-specific GitHub Copilot prompt files, agent profiles, and instruction files to development teams.",
+  "version": "0.1.0",
+  "publisher": "your-enterprise",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "copilot",
+    "prompts",
+    "agents",
+    "enterprise"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "enterpriseCopilotPrompts.initialize",
+        "title": "Initialize Enterprise Copilot Files",
+        "category": "Enterprise Copilot"
+      },
+      {
+        "command": "enterpriseCopilotPrompts.updatePrompts",
+        "title": "Update Enterprise Copilot Prompts",
+        "category": "Enterprise Copilot"
+      },
+      {
+        "command": "enterpriseCopilotPrompts.showPromptList",
+        "title": "Show Available Prompts",
+        "category": "Enterprise Copilot"
+      }
+    ],
+    "configuration": {
+      "title": "Enterprise Copilot Prompts",
+      "properties": {
+        "enterpriseCopilotPrompts.autoUpdate": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically update prompt files when the extension is updated."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.x",
+    "@typescript-eslint/eslint-plugin": "^6.x",
+    "@typescript-eslint/parser": "^6.x",
+    "eslint": "^8.x",
+    "typescript": "^5.x"
+  }
+}

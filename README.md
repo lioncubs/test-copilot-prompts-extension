@@ -1,70 +1,99 @@
-# Code Review Assistant - Copilot Extension Specification
+# Enterprise Copilot Prompts Extension
 
-This repository contains the specification and configuration files for the **Code Review Assistant** GitHub Copilot Extension. This is a server-side agent designed to help developers conduct thorough, consistent, and educational code reviews across their projects.
+A VS Code extension that distributes enterprise-specific GitHub Copilot customization files (prompts, agents, and instruction files) to development teams.
 
-## Extension Concept
+## Purpose
 
-The Code Review Assistant provides three core capabilities:
+This extension enables enterprise teams to:
 
-1. **PR Review** - Comprehensive pull request review with actionable feedback organized by severity
-2. **Improvement Suggestions** - Proactive recommendations for code quality enhancements
-3. **Security Analysis** - Targeted security vulnerability detection and remediation guidance
+- **Standardize** Copilot interactions across the organization
+- **Distribute** approved prompt templates, agent profiles, and instructions
+- **Maintain** consistent coding standards and practices via AI guidance
+- **Deploy** to private VS Code extension servers for enterprise-only distribution
 
-The extension emphasizes educational, constructive feedback rather than just criticism. Every suggestion includes an explanation of "why" it matters, helping developers learn and improve.
+## What Gets Distributed
 
-## File Structure
+When developers install this extension and run "Initialize Enterprise Copilot Files", they receive:
 
 ```
-.
-├── .github/
-│   ├── agents/
-│   │   └── code-review-assistant.agent.md  # Custom agent profile
-│   ├── prompts/
-│   │   ├── review-pr.prompt.md             # PR review workflow
-│   │   ├── suggest-improvements.prompt.md  # Code quality suggestions
-│   │   └── check-security.prompt.md        # Security-focused review
-│   └── copilot-instructions.md             # Repository custom instructions
-├── src/
-│   └── AGENTS.md                           # Source-specific agent guidance
-├── AGENTS.md                               # Repository-wide agent instructions
-└── README.md                               # This file
+.github/
+├── agents/
+│   └── example-agent.agent.md      # Custom agent profiles
+├── prompts/
+│   └── example-prompt.prompt.md    # Reusable prompt templates
+└── copilot-instructions.md         # Repository-wide Copilot context
+
+src/
+└── AGENTS.md                       # Source code-specific agent guidance
+
+AGENTS.md                           # Root agent instructions
 ```
 
-## How the Files Work Together
+## Installation (For Developers)
 
-| File | Scope | Purpose |
-|------|-------|---------|
-| `.github/copilot-instructions.md` | Entire repository | Project context and general Copilot behavior |
-| `AGENTS.md` | Repository root and below | High-level agent behavior guidelines |
-| `src/AGENTS.md` | `src/` directory and below | Source-specific agent guidance |
-| `.github/agents/code-review-assistant.agent.md` | When agent is invoked | Defines the Code Review Assistant persona |
-| `.github/prompts/*.prompt.md` | On-demand | Structured prompts for specific review tasks |
+1. Install this extension from your enterprise VS Code extension server
+2. Open a workspace/folder in VS Code
+3. Run command: `Enterprise Copilot: Initialize Enterprise Copilot Files`
+4. Template files are copied to your workspace
 
-### Relationship Between Files
+## Available Commands
 
-- **copilot-instructions.md** vs **AGENTS.md**: The copilot-instructions file provides general project context for all Copilot interactions, while AGENTS.md provides specific behavioral guidance for AI agents (like the Copilot coding agent) that uses nearest-file-wins semantics.
+| Command | Description |
+|---------|-------------|
+| `Enterprise Copilot: Initialize Enterprise Copilot Files` | Copy template files to current workspace |
+| `Enterprise Copilot: Update Enterprise Copilot Prompts` | Update existing prompt files |
+| `Enterprise Copilot: Show Available Prompts` | View list of available prompt templates |
 
-- **AGENTS.md** vs **src/AGENTS.md**: The root AGENTS.md applies repository-wide, while src/AGENTS.md provides more specific guidance for source code files, demonstrating the scoping capability.
+## Configuration
 
-- **.agent.md profile**: Narrows and operationalizes the general guidance from the other files into a specific persona with defined capabilities and constraints.
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `enterpriseCopilotPrompts.autoUpdate` | `false` | Auto-update prompts when extension updates |
 
-## Usage
+## Customizing Templates (For Extension Maintainers)
 
-### Prompt Files
+To customize the templates distributed by this extension:
 
-Invoke prompts in VS Code by typing `@workspace /prompts` and selecting:
-- `review-pr` - For comprehensive PR reviews
-- `suggest-improvements` - For code quality improvement recommendations
-- `check-security` - For security-focused code analysis
+1. Edit files in the `templates/` directory
+2. Replace placeholder content with enterprise-specific guidelines
+3. Rebuild and republish the extension
 
-### Custom Agent
+### Template Files
 
-The `code-review-assistant` agent can be invoked by the Copilot coding agent to perform thorough code reviews with consistent formatting and severity categorization.
+| File | Purpose |
+|------|---------|
+| `templates/AGENTS.md` | Root agent instructions |
+| `templates/src/AGENTS.md` | Source code agent guidance |
+| `templates/.github/copilot-instructions.md` | Repository Copilot context |
+| `templates/.github/prompts/*.prompt.md` | Prompt templates |
+| `templates/.github/agents/*.agent.md` | Agent profiles |
+
+## Building the Extension
+
+```bash
+# Install dependencies
+npm install
+
+# Compile TypeScript
+npm run compile
+
+# Package for distribution
+npx vsce package
+```
+
+This creates an `.vsix` file that can be uploaded to your enterprise VS Code extension server.
+
+## Enterprise Distribution
+
+1. Build the `.vsix` package
+2. Upload to your enterprise VS Code extension server (e.g., Azure DevOps Artifacts, Open VSX, private Marketplace)
+3. Configure VS Code to use your enterprise extension server
+4. Developers can then install the extension from the enterprise server
 
 ## Documentation References
 
-- [Set up Copilot Extensions (agents)](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/use-copilot-extensions/set-up-copilot-extensions)
-- [About Copilot Extensions](https://docs.github.com/en/copilot/concepts/context/copilot-extensions)
+- [VS Code Extension API](https://code.visualstudio.com/api)
+- [Publishing Extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
 - [Custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-custom-instructions-for-github-copilot)
 - [Prompt files](https://docs.github.com/en/copilot/tutorials/customization-library/prompt-files/your-first-prompt-file)
 - [AGENTS.md format reference](https://agents.md)

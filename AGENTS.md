@@ -1,78 +1,57 @@
-# AGENTS.md - Repository-Wide Agent Instructions
+# AGENTS.md - Extension Repository Instructions
 
-This file provides high-level guidance for any AI agent operating within this repository. These instructions apply to all directories unless overridden by a more specific `AGENTS.md` file in a subdirectory.
+This file provides guidance for AI agents working on this VS Code extension repository.
 
-## Repository Purpose
+## Project Purpose
 
-This repository contains the specification and configuration for the **Code Review Assistant** GitHub Copilot Extension - a server-side agent that helps developers conduct thorough code reviews.
+This repository contains a VS Code extension that distributes enterprise-specific GitHub Copilot customization files (prompts, agents, instructions) to development teams.
 
-## Agent Behavior Guidelines
+## Repository Structure
 
-### Communication Style
+```
+.
+├── src/                    # Extension source code (TypeScript)
+├── templates/              # Template files distributed to users
+│   ├── .github/
+│   │   ├── agents/         # Agent profile templates
+│   │   ├── prompts/        # Prompt file templates
+│   │   └── copilot-instructions.md
+│   ├── src/
+│   │   └── AGENTS.md       # Source-scoped agent instructions template
+│   └── AGENTS.md           # Root agent instructions template
+├── package.json            # VS Code extension manifest
+└── tsconfig.json           # TypeScript configuration
+```
 
-- Use clear, professional language
-- Be constructive and educational, never dismissive
-- Explain reasoning behind suggestions
-- Provide concrete examples when recommending changes
+## Development Guidelines
 
-### Review Philosophy
+### Extension Code (`src/`)
 
-1. **Accuracy over speed** - Take time to understand context before providing feedback
-2. **Specificity over generality** - Provide exact line numbers, code snippets, and actionable suggestions
-3. **Education over criticism** - Every piece of feedback should teach something
-4. **Prioritization** - Distinguish critical issues from nice-to-haves
+- Follow VS Code extension API best practices
+- Use TypeScript with strict mode
+- Handle errors gracefully with user-friendly messages
+- Test file operations across platforms
 
-### Code Quality Priorities
+### Template Files (`templates/`)
 
-When reviewing or generating code, prioritize in this order:
+- Keep templates generic and customizable
+- Include clear "Note" sections explaining customization
+- Follow GitHub Copilot documentation conventions
+- Use YAML frontmatter for prompts and agents
 
-1. **Correctness** - Does it work as intended?
-2. **Security** - Are there vulnerabilities?
-3. **Performance** - Are there efficiency concerns?
-4. **Maintainability** - Is it easy to understand and modify?
-5. **Style** - Does it follow conventions?
+## Building and Testing
 
-### Feedback Categories
+```bash
+npm install          # Install dependencies
+npm run compile      # Build the extension
+npm run watch        # Watch mode for development
+npm run lint         # Run ESLint
+```
 
-Use these severity levels consistently:
+## Packaging for Enterprise Distribution
 
-| Level | Description | Action Required |
-|-------|-------------|-----------------|
-| 🔴 Critical | Bugs, security issues, data loss risks | Must fix before merge |
-| 🟠 Major | Significant quality issues, performance problems | Should fix before merge |
-| 🟡 Minor | Style issues, small improvements | Consider fixing |
-| 🔵 Suggestion | Optional enhancements, learning opportunities | Nice to have |
+```bash
+npx vsce package     # Creates .vsix file for distribution
+```
 
-### What to Always Check
-
-- [ ] Error handling completeness
-- [ ] Input validation and sanitization
-- [ ] Resource cleanup (connections, file handles, etc.)
-- [ ] Edge cases and boundary conditions
-- [ ] Test coverage for new functionality
-- [ ] Documentation for public APIs
-- [ ] Backward compatibility concerns
-
-### What to Avoid
-
-- Nitpicking on style preferences not in coding standards
-- Suggesting rewrites without clear benefit
-- Providing feedback without explanation
-- Blocking on minor issues
-- Making assumptions about intent without asking
-
-## File-Specific Guidance
-
-- Configuration files (`.yml`, `.json`, `.toml`): Validate syntax and check for sensitive data exposure
-- Test files: Ensure tests are meaningful, not just coverage padding
-- Documentation: Check for accuracy, completeness, and clarity
-
-## Integration with Other Configuration
-
-This `AGENTS.md` works alongside:
-
-- `.github/copilot-instructions.md` - Provides project context to Copilot
-- `.github/agents/code-review-assistant.agent.md` - Defines the specific agent persona
-- `.github/prompts/` - Contains structured prompts for specific review tasks
-
-Follow the guidance in all these files for consistent behavior.
+The resulting `.vsix` file can be uploaded to your enterprise VS Code extension server.
