@@ -72,61 +72,30 @@ Rank suggestions by impact:
 
 ## Output Format
 
-Structure your suggestions as follows:
+Structure your suggestions with these sections:
 
-```markdown
-## Code Improvement Suggestions
+**Header**
+- File(s) Analyzed: [filename(s)]
+- Language: [language]
+- Overall Assessment: [brief assessment of current quality]
 
-**File(s) Analyzed**: [filename(s)]
-**Language**: [language]
-**Overall Assessment**: [brief assessment of current quality]
+**High Priority Improvements**
+For each improvement:
+1. Title
+2. Current Code location and snippet
+3. Issue description
+4. Improved Code snippet
+5. Benefits list
 
----
+**Medium Priority Improvements** - Same format as above
 
-### High Priority Improvements
+**Low Priority / Future Considerations** - Brief list of nice-to-haves
 
-#### 1. [Improvement Title]
-
-**Current Code** (`file.ts:lines`):
-\`\`\`typescript
-// Current implementation
-\`\`\`
-
-**Issue**: [What's the problem]
-
-**Improved Code**:
-\`\`\`typescript
-// Improved implementation
-\`\`\`
-
-**Benefits**:
-- [Benefit 1]
-- [Benefit 2]
-
----
-
-### Medium Priority Improvements
-
-[Same format as above]
-
----
-
-### Low Priority / Future Considerations
-
-[Brief list of nice-to-haves]
-
----
-
-## Summary
-
-- **High Priority**: X suggestions
-- **Medium Priority**: Y suggestions
-- **Low Priority**: Z suggestions
-
-**Recommended Next Steps**:
-1. [First action]
-2. [Second action]
-```
+**Summary**
+- High Priority: X suggestions
+- Medium Priority: Y suggestions
+- Low Priority: Z suggestions
+- Recommended Next Steps
 
 ## Focus Areas
 

@@ -73,14 +73,14 @@ For any new source code:
 
 In source code, apply stricter severity than root `AGENTS.md`:
 
-| Issue Type | Severity in `src/` |
-|------------|-------------------|
-| Unhandled errors | 🔴 Critical |
-| Missing input validation | 🔴 Critical |
-| Security vulnerabilities | 🔴 Critical |
-| Missing tests for new code | 🟠 Major |
-| Performance issues | 🟠 Major |
-| Documentation gaps | 🟡 Minor |
+| Issue Type                 | Severity in `src/` |
+|----------------------------|-------------------|
+| Unhandled errors           | 🔴 Critical       |
+| Missing input validation   | 🔴 Critical       |
+| Security vulnerabilities   | 🔴 Critical       |
+| Missing tests for new code | 🟠 Major          |
+| Performance issues         | 🟠 Major          |
+| Documentation gaps         | 🟡 Minor          |
 
 ## Checklist for Source Code Reviews
 

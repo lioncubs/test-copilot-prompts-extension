@@ -98,79 +98,34 @@ For each vulnerability:
 
 ## Output Format
 
-```markdown
-## Security Review Report
+Structure your security review with these sections:
 
-**Scope**: [Files/components reviewed]
-**Date**: [Review date]
-**Risk Summary**: [Overall risk assessment]
+**Security Review Report Header**
+- Scope: [Files/components reviewed]
+- Date: [Review date]
+- Risk Summary: [Overall risk assessment]
 
----
+**Executive Summary**
+- 2-3 sentence summary of findings
+- Severity count table (Critical, High, Medium, Low, Informational)
 
-## Executive Summary
+**Findings** - For each finding include:
+- Severity level and title (e.g., "🔴 CRITICAL: SQL Injection")
+- Location (file and line)
+- CWE reference link
+- OWASP category
+- Description of the vulnerability
+- Vulnerable code snippet
+- Impact assessment
+- Remediation code snippet
+- References
 
-[2-3 sentence summary of findings]
+**Recommendations**
+- Immediate Actions (Critical/High severity)
+- Short-term Actions (Medium severity)
+- Long-term Improvements (Low/Preventive)
 
-| Severity | Count |
-|----------|-------|
-| 🔴 Critical | X |
-| 🟠 High | X |
-| 🟡 Medium | X |
-| 🔵 Low | X |
-| ℹ️ Informational | X |
-
----
-
-## Findings
-
-### 🔴 CRITICAL: [Finding Title]
-
-**Location**: `file.ts:42`
-**CWE**: [CWE-XXX](https://cwe.mitre.org/data/definitions/XXX.html)
-**OWASP**: [Category]
-
-**Description**:
-[Clear explanation of the vulnerability]
-
-**Vulnerable Code**:
-\`\`\`typescript
-// Vulnerable implementation
-\`\`\`
-
-**Impact**:
-[What could happen if exploited]
-
-**Remediation**:
-\`\`\`typescript
-// Secure implementation
-\`\`\`
-
-**References**:
-- [Relevant documentation]
-
----
-
-[Repeat for each finding]
-
----
-
-## Recommendations
-
-### Immediate Actions (Critical/High)
-1. [Action item]
-
-### Short-term Actions (Medium)
-1. [Action item]
-
-### Long-term Improvements (Low/Preventive)
-1. [Action item]
-
----
-
-## Additional Notes
-
-[Any other security observations or recommendations]
-```
+**Additional Notes** - Any other security observations
 
 ## Security-Specific Checks by Language
 

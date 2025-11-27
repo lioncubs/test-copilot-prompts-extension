@@ -90,45 +90,24 @@ Provide a clear summary including:
 
 ## Output Format
 
-Structure your review as follows:
+Structure your review with these sections:
 
-```markdown
-## PR Review Summary
+**PR Review Summary**
+- PR: [Title]
+- Files Changed: X
+- Overall Assessment: [Brief assessment]
 
-**PR**: [Title]
-**Files Changed**: X
-**Overall Assessment**: [Brief assessment]
+**🔴 Critical Issues** - List critical issues, or "None identified"
 
----
+**🟠 Major Issues** - List major issues, or "None identified"
 
-## 🔴 Critical Issues
+**🟡 Minor Issues** - List minor issues
 
-[List critical issues, or "None identified"]
+**🔵 Suggestions** - List suggestions
 
-## 🟠 Major Issues
+**✅ Positive Observations** - Acknowledge good practices
 
-[List major issues, or "None identified"]
-
-## 🟡 Minor Issues
-
-[List minor issues]
-
-## 🔵 Suggestions
-
-[List suggestions]
-
-## ✅ Positive Observations
-
-[Acknowledge good practices]
-
----
-
-## Recommendation
-
-[Approve | Request Changes | Comment]
-
-[Brief explanation of recommendation]
-```
+**Recommendation** - State Approve, Request Changes, or Comment with brief explanation
 
 ## Variables
 
