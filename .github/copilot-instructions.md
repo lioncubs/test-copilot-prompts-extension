@@ -55,13 +55,15 @@ A specialized code review agent with MCP integration:
 All prompts and agents can be installed locally for standalone use:
 
 ```bash
-# Copy prompts to your repository
-mkdir -p .github/prompts
-cp .github/prompts/*.prompt.md your-repo/.github/prompts/
+# From the enterprise-copilot-prompts extension directory, copy prompts to your repository
+mkdir -p /path/to/your-repo/.github/prompts
+cp .github/prompts/*.prompt.md /path/to/your-repo/.github/prompts/
 
 # Copy agents to your repository
-mkdir -p .github/agents
-cp .github/agents/*.agent.md your-repo/.github/agents/
+mkdir -p /path/to/your-repo/.github/agents
+cp .github/agents/*.agent.md /path/to/your-repo/.github/agents/
 ```
+
+Alternatively, download the files directly from this repository and place them in your project's `.github/prompts/` and `.github/agents/` directories.
 
 This enables prompts and agents to work directly with GitHub Copilot without requiring the extension.
