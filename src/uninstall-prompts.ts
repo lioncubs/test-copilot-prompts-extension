@@ -15,19 +15,7 @@ function removeDirectory(dirPath: string): void {
         return;
     }
 
-    const entries = fs.readdirSync(dirPath, { withFileTypes: true });
-    
-    for (const entry of entries) {
-        const entryPath = path.join(dirPath, entry.name);
-        if (entry.isDirectory()) {
-            removeDirectory(entryPath);
-        } else {
-            fs.unlinkSync(entryPath);
-            console.log(`Removed: ${entryPath}`);
-        }
-    }
-
-    fs.rmdirSync(dirPath);
+    fs.rmSync(dirPath, { recursive: true, force: true });
     console.log(`Removed directory: ${dirPath}`);
 }
 
