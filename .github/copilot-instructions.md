@@ -27,3 +27,43 @@ The `templates/` directory contains placeholder files that enterprise admins sho
 - Agent profiles (`.agent.md`)
 - Agent instructions (`AGENTS.md`)
 - Copilot instructions (`copilot-instructions.md`)
+
+## Available Prompts
+
+This repository includes the following prompts with MCP (Model Context Protocol) integration:
+
+### Test Code-Review Prompt (`.github/prompts/test-code-review.prompt.md`)
+
+A code review prompt that leverages MCP commands for evaluating GitHub projects:
+
+- Trigger via: `@workspace /prompts test-code-review`
+- Supports pull request reviews, commit analysis, and code search
+- Provides structured feedback with severity categories
+
+## Available Agents
+
+### Test Reviewer Agent (`.github/agents/test-reviewer.agent.md`)
+
+A specialized code review agent with MCP integration:
+
+- Performs thorough repository analysis
+- Integrates with pull requests and issue tracking
+- Provides consistent, constructive feedback
+
+## Local Installation
+
+All prompts and agents can be installed locally for standalone use:
+
+```bash
+# From the enterprise-copilot-prompts extension directory, copy prompts to your repository
+mkdir -p /path/to/your-repo/.github/prompts
+cp .github/prompts/*.prompt.md /path/to/your-repo/.github/prompts/
+
+# Copy agents to your repository
+mkdir -p /path/to/your-repo/.github/agents
+cp .github/agents/*.agent.md /path/to/your-repo/.github/agents/
+```
+
+Alternatively, download the files directly from this repository and place them in your project's `.github/prompts/` and `.github/agents/` directories.
+
+This enables prompts and agents to work directly with GitHub Copilot without requiring the extension.
