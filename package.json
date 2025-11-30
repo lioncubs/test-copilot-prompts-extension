@@ -36,6 +36,11 @@
         "command": "enterpriseCopilotPrompts.showPromptList",
         "title": "Show Available Prompts",
         "category": "Enterprise Copilot"
+      },
+      {
+        "command": "enterpriseCopilotPrompts.runCodeReview",
+        "title": "Run Code-Review Prompt",
+        "category": "Enterprise Copilot"
       }
     ],
     "configuration": {

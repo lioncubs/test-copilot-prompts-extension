@@ -21,13 +21,22 @@ export function activate(context: vscode.ExtensionContext) {
         () => showAvailablePrompts(context)
     );
 
-    context.subscriptions.push(initializeCommand, updateCommand, showListCommand);
+    // MCP integration: Run Code-Review Prompt command
+    const runCodeReviewCommand = vscode.commands.registerCommand(
+        'enterpriseCopilotPrompts.runCodeReview',
+        () => runCodeReviewPrompt(context)
+    );
+
+    context.subscriptions.push(initializeCommand, updateCommand, showListCommand, runCodeReviewCommand);
 
     // Check for auto-update on activation
     const config = vscode.workspace.getConfiguration('enterpriseCopilotPrompts');
     if (config.get<boolean>('autoUpdate')) {
         updatePromptFiles(context);
     }
+
+    // Dynamic handling for .github/copilot-instructions.md when repository is loaded
+    loadCopilotInstructions(context);
 }
 
 async function initializeEnterpriseFiles(context: vscode.ExtensionContext): Promise<void> {
@@ -198,6 +207,64 @@ async function copyDirectoryRecursive(
 
             fs.copyFileSync(sourcePath, targetPath);
             progress?.report({ increment: incrementPerFile, message: `Copied ${entry.name}` });
+        }
+    }
+}
+
+async function runCodeReviewPrompt(context: vscode.ExtensionContext): Promise<void> {
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+        vscode.window.showErrorMessage('No workspace folder open. Please open a folder first.');
+        return;
+    }
+
+    // Check for the test code-review prompt in extension's .github/prompts or workspace
+    const extensionPromptPath = path.join(context.extensionPath, '.github', 'prompts', 'test-code-review.prompt.md');
+    const workspacePromptPath = path.join(workspaceFolder.uri.fsPath, '.github', 'prompts', 'test-code-review.prompt.md');
+
+    let promptPath: string | undefined;
+    if (fs.existsSync(workspacePromptPath)) {
+        promptPath = workspacePromptPath;
+    } else if (fs.existsSync(extensionPromptPath)) {
+        promptPath = extensionPromptPath;
+    }
+
+    if (!promptPath) {
+        vscode.window.showErrorMessage('Code-review prompt not found. Please initialize enterprise files first.');
+        return;
+    }
+
+    try {
+        const promptContent = fs.readFileSync(promptPath, 'utf-8');
+        const doc = await vscode.workspace.openTextDocument({
+            content: promptContent,
+            language: 'markdown'
+        });
+        await vscode.window.showTextDocument(doc, { preview: true });
+        vscode.window.showInformationMessage('Code-Review Prompt loaded. Use this prompt with GitHub Copilot for code reviews.');
+    } catch (error) {
+        vscode.window.showErrorMessage(`Failed to load code-review prompt: ${error}`);
+    }
+}
+
+function loadCopilotInstructions(context: vscode.ExtensionContext): void {
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+        return;
+    }
+
+    const instructionsPath = path.join(workspaceFolder.uri.fsPath, '.github', 'copilot-instructions.md');
+    
+    if (fs.existsSync(instructionsPath)) {
+        console.log('Copilot instructions found at:', instructionsPath);
+        // Store the path for MCP context handling
+        context.workspaceState.update('copilotInstructionsPath', instructionsPath);
+    } else {
+        // Check extension's template for fallback
+        const templateInstructionsPath = path.join(context.extensionPath, 'templates', '.github', 'copilot-instructions.md');
+        if (fs.existsSync(templateInstructionsPath)) {
+            console.log('Using template copilot instructions from:', templateInstructionsPath);
+            context.workspaceState.update('copilotInstructionsPath', templateInstructionsPath);
         }
     }
 }
